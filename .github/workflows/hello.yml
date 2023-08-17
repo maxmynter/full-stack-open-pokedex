@@ -17,3 +17,10 @@ jobs:
 
       - name: Directory Contents
         run: ls -l
+      - name: Print some stuff
+        if: ${{ github.event_name == 'push' }}
+        env:
+          COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
+          COMMI_JOIN: ${{join(github.event.commits.*.message)}}
+          COMMIT_CONTAINS: ${{!contains(join(github.event.commits.*.message),'#skip')}}
+        run: echo "$COMMIT_MESSAGES ----- $COMMI_JOIN ---- $COMMIT_CONTAINS "
