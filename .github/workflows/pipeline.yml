@@ -20,7 +20,7 @@ jobs:
           node-version: '16'
       - name: Install Dependencies
         run: npm install
-      - name: Check Coding Style
+      - name: Linting
         run: npm run eslint
       - name: Build
         run: npm run build
@@ -33,4 +33,5 @@ jobs:
           start: npm run start-prod
           wait-on: http://localhost:8080
       - name: Deploy to Render
+        if: ${{ github.event_name == 'push' }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
