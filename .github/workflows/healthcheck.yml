@@ -1,0 +1,18 @@
+name: Health Check
+
+on:
+  push:
+    branches:
+      - master
+      - new-branch
+  schedule:
+    - cron: '30 6 * * *'
+
+jobs:
+  do-health-check:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check the deployed service URL
+        uses: jtalk/url-health-check-action@v3
+        with:
+          url: https://pokedex-fsopen.onrender.com/
